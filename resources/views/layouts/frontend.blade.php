@@ -16,8 +16,8 @@
     <!--site title-->
     <title>@yield('title', 'My Shop')</title>
 
-    <!--bootstrap-->
-    <link href="{{ asset('assets/frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!--frontend css-->
+    <link href="{{ asset('css/frontend.css') }}" rel="stylesheet">
 
     <!--icon font-->
     <link href="{{ asset('assets/frontend/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
@@ -62,14 +62,11 @@
     </div>
 </footer>
 
-<!--scripts-->
-<script src="{{ asset('assets/frontend/vendor/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/frontend/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/frontend/vendor/popper.min.js') }}"></script>
+
 
 <!--init scripts-->
+<script src="{{ asset('js/frontend.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/scripts.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
 <script>
     $(document).on('click', '.add-to-cart', function(e) {
         e.preventDefault()
@@ -83,7 +80,6 @@
             qty: p_qty
         })
             .then(res => {
-                console.log(res.data)
                 $('.cart-quantity-highlighter').text(res.data.count)
                 $('.append-mini-cart-items').html(res.data.markup)
                 $('.mini-cart-subtotal').text(res.data.subtotal)
@@ -107,6 +103,20 @@
                 }
             })
             .catch(err => console.log(err))
+    })
+</script>
+<script>
+    $( function() {
+        $( "#slider-range" ).slider({
+            range: true,
+            min: 0,
+            max: 500,
+            values: [ 75, 300 ],
+            slide: function( event, ui ) {
+                $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+            }
+        })
+        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
     })
 </script>
 @yield('scripts')

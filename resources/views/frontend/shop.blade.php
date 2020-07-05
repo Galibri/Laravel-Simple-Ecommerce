@@ -109,7 +109,7 @@
                             <h3 class="widget-title">Filter by price</h3>
                             <form method="get" action="#">
                                 <div class="price_slider_wrapper">
-                                    <div class="price_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
+                                    {{-- <div class="price_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
                                          style="">
                                         <div class="ui-slider-range ui-widget-header ui-corner-all"
                                              style="left: 22.2222%; width: 44.4444%;"></div>
@@ -117,19 +117,12 @@
                                               style="left: 22.2222%;"></span>
                                         <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"
                                               style="left: 66.6667%;"></span>
-                                    </div>
-                                    <div class="price_slider_amount" data-step="10">
-                                        <input type="text" id="min_price" name="min_price" value="0" data-min="0"
-                                               placeholder="Min price" style="display: none;">
-                                        <input type="text" id="max_price" name="max_price" value="90" data-max="90"
-                                               placeholder="Max price" style="display: none;">
-                                        <button type="submit" class="button">Filter</button>
-                                        <div class="price_label" style="">
-                                            Price: <span class="from">৳&nbsp;20</span> — <span
-                                                class="to">৳&nbsp;60</span>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div>
+                                    </div> --}}
+                                    <div id="slider-range"></div>
+                                    <p>
+                                        <label for="amount">Price range:</label>
+                                        <input type="text" id="amount" readonly style="border:0; color:#ff5f5f; font-weight:bold;">
+                                    </p>
                                 </div>
                             </form>
                         </section>
@@ -157,56 +150,6 @@
                                 <li class="cat-item cat-item-22 nav-item"><a href="#" class="nav-link">Decor</a></li>
                                 <li class="cat-item cat-item-21 nav-item"><a href="#" class="nav-link">Music</a></li>
                                 <li class="cat-item cat-item-15 nav-item"><a href="#" class="nav-link">Uncategorized</a></li>
-                            </ul>
-                        </section>
-                        <section id="woocommerce_top_rated_products-2" class="widget woocommerce widget_top_rated_products">
-                            <h3 class="widget-title">Top rated products</h3>
-                            <ul class="product_list_widget">
-                                <li>
-                                    <a href="#">
-                                        <img width="300" height="300" src="assets/img/p1.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="">
-                                        <span class="product-title">V-Neck T-Shirt</span>
-                                    </a>
-
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">৳&nbsp;</span>15.00</span> – <span class="woocommerce-Price-amount amount">
-                                    <span class="woocommerce-Price-currencySymbol">৳&nbsp;</span>20.00</span>
-                                </li>
-                                <li> <a href="#">
-                                        <img width="300" height="300" src="assets/img/p2.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="">
-                                        <span class="product-title">Album</span>
-                                    </a>
-
-                                    <span class="woocommerce-Price-amount amount">
-                                        <span class="woocommerce-Price-currencySymbol">৳&nbsp;</span>15.00</span>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img width="300" height="300" src="assets/img/p3.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="">
-                                        <span class="product-title">Hoodie</span>
-                                    </a>
-                                    <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">৳&nbsp;</span>42.00</span> – <span class="woocommerce-Price-amount amount"><span
-                                        class="woocommerce-Price-currencySymbol">৳&nbsp;</span>45.00</span>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img width="300" height="300" src="assets/img/p4.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="">
-                                        <span class="product-title">Single</span>
-                                    </a>
-
-                                    <del><span class="woocommerce-Price-amount amount"><span
-                                            class="woocommerce-Price-currencySymbol">৳&nbsp;</span>3.00</span></del>
-                                    <ins><span class="woocommerce-Price-amount amount"><span
-                                            class="woocommerce-Price-currencySymbol">৳&nbsp;</span>2.00</span></ins>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img width="300" height="300" src="assets/img/p5.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" >
-                                        <span class="product-title">Hoodie with Logo</span>
-                                    </a>
-                                    <span class="woocommerce-Price-amount amount"><span
-                                            class="woocommerce-Price-currencySymbol">৳&nbsp;</span>45.00</span>
-                                </li>
                             </ul>
                         </section>
                     </div>
