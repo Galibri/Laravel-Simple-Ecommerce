@@ -90,6 +90,20 @@
             })
             .catch()
     })
+
+    $(document).on('click', '.remove_from_cart_button', function(e) {
+        e.preventDefault()
+        let p_id = $(this).data('product_id')
+        axios.post('{{ route('frontend.remove-from-cart') }}', {
+            id: p_id
+        })
+            .then(res => {
+                $('.cart-quantity-highlighter').text(res.data.count)
+                $('.append-mini-cart-items').html(res.data.markup)
+                $('.mini-cart-subtotal').text(res.data.subtotal)
+            })
+            .catch()
+    })
 </script>
 @yield('scripts')
 </body>

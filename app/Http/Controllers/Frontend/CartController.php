@@ -59,6 +59,22 @@ class CartController extends Controller
     }
 
     public function showCartPage() {
-        return view('frontend.cart');
+        if(self::total_in_cart() > 0) {
+            return view('frontend.cart');
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function remove_from_cart(Request $request) {
+        if(session('cart') && count(session('cart')) > 0) {
+            session()->forget('cart.' . $request->id);
+        }
+        return response()->json([
+            'count' =>  self::total_in_cart(),
+            'items' => self::cart_items(),
+            'markup' => self::get_markup(),
+            'subtotal' => self::sub_total()
+        ]);
     }
 }

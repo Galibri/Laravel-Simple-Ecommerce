@@ -43,9 +43,9 @@
                                             </thead>
                                             <tbody>
                                             @foreach(Cart::cart_items() as $product)
-                                            <tr class="woocommerce-cart-form__cart-item cart_item">
+                                            <tr class="woocommerce-cart-form__cart-item cart_item" id="cart_item_{{ $product->id }}">
                                                 <td class="product-remove">
-                                                    <a href="#" class="remove" aria-label="Remove this item" data-product_id="30" data-product_sku="">×</a>						</td>
+                                                    <a href="" class="remove remove_from_cart_button" aria-label="Remove this item" data-product_id="{{ $product->id }}">×</a>						</td>
                                                 <td class="product-thumbnail">
                                                     <a href="#"><img width="324" height="324" src="{{ asset($product->thumbnail) }}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt=""></a>
                                                 </td>
