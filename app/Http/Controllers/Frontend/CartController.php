@@ -40,6 +40,16 @@ class CartController extends Controller
         return sprintf("%0.2f", $subTotal);
     }
 
+    public static function cart_final_price() {
+        $subTotal = self::sub_total();
+        // we will add discount, tax and shipping charge here
+        $tax = 0;
+        $discount = 0;
+        $shippingCharge = 0;
+        $total = $subTotal + $tax + $shippingCharge - $discount; 
+        return $total;
+    }
+
     public static function cart_items() {
         $sProducts = [];
         if(session('cart') && count(session('cart')) > 0) {

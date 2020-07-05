@@ -96,7 +96,7 @@
                                     </tr>
                                     <tr class="order-total">
                                         <th>Total</th>
-                                        <td data-title="Total"><strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ Cart::sub_total() }}</span></strong> </td>
+                                        <td data-title="Total"><strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>{{ Cart::cart_final_price() }}</span></strong> </td>
                                     </tr>
                                     </tbody>
                                 </table>

@@ -88,7 +88,7 @@
                 $('.append-mini-cart-items').html(res.data.markup)
                 $('.mini-cart-subtotal').text(res.data.subtotal)
             })
-            .catch()
+            .catch(err => console.log(err))
     })
 
     $(document).on('click', '.remove_from_cart_button', function(e) {
@@ -101,8 +101,12 @@
                 $('.cart-quantity-highlighter').text(res.data.count)
                 $('.append-mini-cart-items').html(res.data.markup)
                 $('.mini-cart-subtotal').text(res.data.subtotal)
+                $('#cart_item_' + p_id).remove()
+                if(res.data.count == 0 && '{{ request()->route()->getName() }}' == 'frontend.cart') {
+                    window.location.href = '{{ route('frontend.shop') }}'
+                }
             })
-            .catch()
+            .catch(err => console.log(err))
     })
 </script>
 @yield('scripts')
