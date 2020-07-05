@@ -89,7 +89,7 @@
                                     <div class="append-mini-cart-items">{!! Cart::get_markup() !!}</div>
                                     <li class="woocommerce-mini-cart-item mini_cart_item">
                                         <div class="woocomerce-mini-cart__container">
-                                            <p class="woocommerce-mini-cart__total total"><strong>Subtotal:</strong> <span class="woocs_special_price_code"><span class="woocommerce-Price-amount amount">{{ Cart::sub_total() }}<span class="woocommerce-Price-currencySymbol">$</span></span></span></p>
+                                            <p class="woocommerce-mini-cart__total total"><strong>Subtotal:</strong> <span class="woocs_special_price_code"><span class="woocommerce-Price-amount amount mini-cart-subtotal">{{ Cart::sub_total() }}</span><span class="woocommerce-Price-currencySymbol">$</span></span></p>
                                             <p class="woocommerce-mini-cart__buttons buttons">
                                                 <a href="{{ route('frontend.cart') }}" class="button wc-forward">View cart</a>
                                                 <a href="#" class="button checkout wc-forward">Checkout</a>

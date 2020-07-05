@@ -86,7 +86,7 @@
                 console.log(res.data)
                 $('.cart-quantity-highlighter').text(res.data.count)
                 $('.append-mini-cart-items').html(res.data.markup)
-                $('.woocommerce-Price-amount.amount').text(res.data.subtotal)
+                $('.mini-cart-subtotal').text(res.data.subtotal)
             })
             .catch()
     })
