@@ -18,10 +18,10 @@ class CartController extends Controller
     {
         $productId = $request->id;
         $productQty = $request->qty;
-        session()->forget('cart');
 
         if(auth()->check()) {
-            $user_cart = auth()->user()->cart;
+            // $user_cart = auth()->user()->cart;
+            $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
             if($user_cart) {
                 // Check existing data
                 $items = json_decode($user_cart->cart_items, true);
@@ -51,7 +51,9 @@ class CartController extends Controller
      */
     public static function get_cart() {
         if(auth()->check()) {
-            $user_cart = auth()->user()->cart;
+            $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
+
+            // $user_cart = auth()->user()->cart;
             if($user_cart) {
                 return json_decode($user_cart->cart_items, true);
             }
@@ -60,10 +62,38 @@ class CartController extends Controller
         return session('cart');
     }
 
+    public static function cart_action_after_login() {
+        if(auth()->check()) {
+            if(session('cart')) {
+                $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
+                if($user_cart) {
+                    // Check existing data
+                    $items = json_decode($user_cart->cart_items, true);
+                    $new_items = session('cart') + $items;
+                    $user_cart->cart_items = json_encode( $new_items);
+                } else {
+                    $user_cart = new Cart;
+                    $user_cart->user_id = auth()->user()->id;
+                    $user_cart->cart_items = json_encode( session('cart') );
+                }
+                if($user_cart->save()) {
+                    session()->forget('cart');
+                }
+            }
+        }
+    }
+
     public function update_cart(Request $request) {
-        dd($request->cart);
-        // $request->session()->put('cart', $request->cart);
-        // return redirect()->back();
+        if(auth()->check()) {
+            $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
+            if($user_cart) {
+                $user_cart->cart_items = json_encode( $request->cart );
+                $user_cart->save();
+            }
+        } else {
+            $request->session()->put('cart', $request->cart);
+        }
+        return redirect()->back();
     }
 
     /**
@@ -72,8 +102,9 @@ class CartController extends Controller
      */
     public static function total_in_cart() {
         if(auth()->check()) {
-            if(auth()->user()->cart) {
-                return count(json_decode(auth()->user()->cart->cart_items, true));
+            $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
+            if($user_cart) {
+                return count(json_decode($user_cart->cart_items, true));
             } else {
                 return 0;
             }
@@ -117,11 +148,11 @@ class CartController extends Controller
         $sProducts = [];
 
         if(auth()->check()) {
-            if(auth()->user()->cart) {
-                $items = auth()->user()->cart->cart_items;
+            $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
+            if($user_cart) {
+                $items = $user_cart->cart_items;
                 if($items) {
                     $cart_items_array = json_decode($items, true);
-                    session('cart', $cart_items_array);
                     $p_ids = array_keys($cart_items_array);
                     $sProducts = Product::whereIn('id', $p_ids)->get();
                 }
@@ -135,7 +166,6 @@ class CartController extends Controller
             $sProducts = Product::whereIn('id', $p_ids)->get();
         }
         return $sProducts;
-
     }
 
     /**
@@ -150,7 +180,7 @@ class CartController extends Controller
     /**
      * cart page view
      */
-    public function showCartPage() {
+    public function show_cart_page() {
         if(self::total_in_cart() > 0) {
             return view('frontend.cart');
         } else {
@@ -163,9 +193,20 @@ class CartController extends Controller
      * return [json "total_in_cart, cart_items, get_markup, sub_total"]
      */
     public function remove_from_cart(Request $request) {
+        if(auth()->check()) {
+            $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
+            if($user_cart) {
+                $cart_items = json_decode($user_cart->cart_items, true);
+                unset($cart_items[$request->id]);
+                $cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
+                $cart->cart_items = json_encode( $cart_items );
+                $cart->save();
+            }
+        } 
         if(session('cart') && count(session('cart')) > 0) {
             session()->forget('cart.' . $request->id);
         }
+
         return response()->json([
             'count' =>  self::total_in_cart(),
             'items' => self::cart_items(),

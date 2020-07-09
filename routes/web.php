@@ -33,7 +33,7 @@ Route::name('frontend.')->namespace('Frontend')->group(function() {
     Route::get('/product/{slug}', 'ProductController@show')->name('product');
     Route::post('/add-to-cart', 'CartController@add_to_cart')->name('add-to-cart');
     Route::post('/remove-from-cart', 'CartController@remove_from_cart')->name('remove-from-cart');
-    Route::get('/cart', 'CartController@showCartPage')->name('cart');
+    Route::get('/cart', 'CartController@show_cart_page')->name('cart');
     Route::post('/cart-update', 'CartController@update_cart')->name('cart-update');
     Route::get('/checkout', 'OrderController@checkout')->name('checkout');
     Route::post('/order', 'OrderController@store')->name('place-order');

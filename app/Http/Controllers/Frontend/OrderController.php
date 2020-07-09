@@ -19,6 +19,7 @@ class OrderController extends Controller
         // dd(auth()->user()->cart->cart_items);
         // dd(json_decode(auth()->user()->cart->cart_items, true));
         // dd(CartController::get_cart());
+        // dd(CartController::cart_action_after_login());
         return view('frontend.checkout');
     }
 }
