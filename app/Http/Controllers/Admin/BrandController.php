@@ -52,7 +52,7 @@ class BrandController extends Controller
             $path = 'uploads/images/brands';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
-            $brand->logo = $path . '/' . $image_name;
+            $brand->logo = $image_name;
         }
 
         if($brand->save()) {
@@ -96,10 +96,10 @@ class BrandController extends Controller
             }
 
             $image = $request->file('logo');
-            $path = 'uploads/images';
+            $path = 'uploads/images/brands';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
-            $brand->logo = $path . '/' . $image_name;
+            $brand->logo = $image_name;
         }
 
         if($brand->save()) {

@@ -19,86 +19,49 @@
                     <!--responsive toggle icon-->
 
                     <!--search start-->
-                    <div id="form-search" class="form-search">
-                        <div class="input-group">
-                            <input type="search" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                                <button id="form-search-close-btn" class="btn" type="button">
-                                    <span class="svg svg--cross">
-                                        <svg class="svg__icon" width="32px" height="32px" viewBox="0 0 32 32">
-                                            <path d="M16.7,16L31.9,0.9c0.2-0.2,0.2-0.5,0-0.7s-0.5-0.2-0.7,0L16,15.3L0.9,0.1C0.7,0,0.3,0,0.1,0.1S0,0.7,0.1,0.9L15.3,16
-                                            L0.1,31.1c-0.2,0.2-0.2,0.5,0,0.7C0.2,32,0.4,32,0.5,32s0.3,0,0.4-0.1L16,16.7l15.1,15.1c0.1,0.1,0.2,0.1,0.4,0.1s0.3,0,0.4-0.1
-                                            c0.2-0.2,0.2-0.5,0-0.7L16.7,16z"/>
-                                        </svg>
-                                    </span>
-                                </button>
-                            </span>
+                    <form action="{{ route('frontend.shop') }}" method="get">
+                        <div id="form-search" class="form-search">
+                            <div class="input-group">
+                                <input type="search" class="form-control" name="s" placeholder="Search for..." value="{{ request()->has('s') ? request()->get('s') : '' }}">
+                                <span class="input-group-btn">
+                                    <button id="form-search-close-btn" class="btn" type="button">
+                                        <i class="fa fa-search"></i>
+                                        <span class="svg svg--cross">
+                                            <svg class="svg__icon" width="32px" height="32px" viewBox="0 0 32 32">
+                                                <path d="M16.7,16L31.9,0.9c0.2-0.2,0.2-0.5,0-0.7s-0.5-0.2-0.7,0L16,15.3L0.9,0.1C0.7,0,0.3,0,0.1,0.1S0,0.7,0.1,0.9L15.3,16
+                                                L0.1,31.1c-0.2,0.2-0.2,0.5,0,0.7C0.2,32,0.4,32,0.5,32s0.3,0,0.4-0.1L16,16.7l15.1,15.1c0.1,0.1,0.2,0.1,0.4,0.1s0.3,0,0.4-0.1
+                                                c0.2-0.2,0.2-0.5,0-0.7L16.7,16z"/>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                     <!--search end-->
                     <!--nav link-->
                     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                         <ul id="menu" class="navbar-nav ml-auto">
                             <li class=""><a href="{{ route('frontend.home') }}" class="" >Home</a></li>
                             <li class=""><a href="{{ route('frontend.shop') }}" class="" >Shop</a></li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product Single Layouts</a>
-                                        <ul class="dropdown-menu" >
-                                            <li><a href="product-single-on-sale.html">Product Single - On Sale </a></li>
-                                            <li><a href="product-single-group.html">Product Single - Group</a></li>
-                                            <li><a href="product-single-variable.html">Product Single - Variable</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop Pages</a>
-                                        <ul class="dropdown-menu" >
-                                            <li><a href="cart.html">Cart </a></li>
-                                            <li><a href="checkout.html">Checkout </a></li>
-                                            <li><a href="order-process.html">Order Process </a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</a>
-                                        <ul class="dropdown-menu" >
-                                            <li><a href="my-account-dashbord.html">My Account - Dashboard </a></li>
-                                            <li><a href="my-account-order.html">My Account - Order </a></li>
-                                            <li><a href="my-account-downloads.html">My Account - Downloads </a></li>
-                                            <li><a href="my-account-ac-details.html">My Account - Account Details </a></li>
-                                            <li><a href="login-registration.html">Login / Registration </a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="about-us.html">About Us</a></li>
-                                    <li><a href="error.html">404 Error</a></li>
-                                </ul>
-                            </li>
                             <li><a href="contact-us.html">Contact Us</a></li>
                             <li><a href="#" class="" id="search-icon"><i class="fa fa-search"></i></a></li>
-                            <li><a href="#" class="" ><i class="fa fa-user"></i></a></li>
+
+                            @guest
+                                <li><a href="{{ route('login') }}" class="" >Login</a></li>
+                            @else
+                                <li><a href="{{ route('frontend.user-dashboard') }}" class="" ><i class="fa fa-user"></i></a></li>
+                            @endguest
                             <!--<li><a href="#" class="" ><i class="fa fa-shopping-basket"></i></a></li>-->
                             <li class="dropdown mini-cart">
-                                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-shopping-basket"></i><span class="cart-quantity-highlighter">{{ Cart::total_in_cart() }}</span></a>
+                                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-shopping-basket"></i><span class="cart-quantity-highlighter">{{ CartController::total_in_cart() }}</span></a>
                                 <ul class="dropdown-menu dropdown-menu-right widget_shopping_cart_content woocommerce-mini-cart cart_list product_list_widget">
-                                    <div class="append-mini-cart-items">{!! Cart::get_markup() !!}</div>
+                                    <div class="append-mini-cart-items">{!! CartController::get_markup() !!}</div>
                                 </ul>
                             </li>
                         </ul>
-
                     </div>
-                    <!--nav link-->
-
-
                 </nav>
-
-
-
             </div>
         </div>
     </div>

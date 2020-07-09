@@ -15,7 +15,7 @@
         </div>
     </section>
     <!--page title end-->
-    <main class="site-main">
+    <main class="site-main shop">
         <!--product section start-->
         <section class="space-3">
             <div class="container">
@@ -23,7 +23,8 @@
                     <div class="col-lg-8 mb-4 mb-lg-0">
                         <div class="section-title">
                             <h2 class="title d-block text-left-sm">Shop</h2>
-                            <p class="woocommerce-result-count"> Showing 1–16 of 17 results</p>
+                            <p class="woocommerce-result-count"> Showing {{ $products->firstItem() }}-{{ $products->lastItem() }} of {{ $products->total() }} results</p>
+
                             <form class="woocommerce-ordering float-lg-right" method="get">
                                 <select name="orderby" class="orderby gw-sort-products form-control" aria-label="Shop order" >
                                     <option value="" selected="selected">Default sorting</option>
@@ -88,69 +89,51 @@
                         </ul>
                         @if($products->hasPages())
                         <div class="text-center d-flex justify-content-center border-top pt-5">
-                            {{ $products->links() }}
+                            {{ $products->withQueryString()->links() }}
                         </div>
                         @endif
                     </div>
 
                     <div class="col-lg-4 widget-area " role="complementary">
                         <section id="woocommerce_product_search-2" class="widget woocommerce widget_product_search">
-                            <form role="search" method="get" class="woocommerce-product-search"
-                                  action="#">
+                            <form role="search" method="get" class="woocommerce-product-search" action="{{ request()->fullUrl() }}">
                                 <label class="screen-reader-text" for="woocommerce-product-search-field-0">
                                     Search for:</label>
                                 <input type="search" id="woocommerce-product-search-field-0" class="search-field"
-                                       placeholder="Search products…" value="" name="s">
+                                       placeholder="Search products…" name="s" value="{{ request()->has('s') ? request()->get('s') : '' }}">
                                 <button type="submit" value="Search">Search</button>
-                                <input type="hidden" name="post_type" value="product">
                             </form>
                         </section>
                         <section id="woocommerce_price_filter-2" class="widget woocommerce widget_price_filter">
                             <h3 class="widget-title">Filter by price</h3>
-                            <form method="get" action="#">
-                                <div class="price_slider_wrapper">
-                                    {{-- <div class="price_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-                                         style="">
-                                        <div class="ui-slider-range ui-widget-header ui-corner-all"
-                                             style="left: 22.2222%; width: 44.4444%;"></div>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"
-                                              style="left: 22.2222%;"></span>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"
-                                              style="left: 66.6667%;"></span>
-                                    </div> --}}
-                                    <div id="slider-range"></div>
-                                    <p>
-                                        <label for="amount">Price range:</label>
-                                        <input type="text" id="amount" readonly style="border:0; color:#ff5f5f; font-weight:bold;">
-                                    </p>
-                                </div>
-                            </form>
+                            <div class="price_slider_wrapper">
+                                <div id="slider-range"></div>
+                                <p>
+                                    <label for="amount">Price range:</label>
+                                    <input type="text" id="amount" readonly style="border:0; color:#ff5f5f; font-weight:bold;">
+                                    <input type="hidden" id="min-price">
+                                    <input type="hidden" id="max-price">
+                                </p>
+                                <button class="price-submit">Filter</button>
+                            </div>
                         </section>
-                        <section id="woocommerce_layered_nav-2"
-                                 class="widget woocommerce widget_layered_nav woocommerce-widget-layered-nav"><h3
-                                class="widget-title">Filter by</h3>
-                            <ul class="woocommerce-widget-layered-nav-list">
-                                <li class="woocommerce-widget-layered-nav-list__item wc-layered-nav-term "><a rel="nofollow" href="#">Blue</a> <span class="count">(4)</span></li>
-                                <li class="woocommerce-widget-layered-nav-list__item wc-layered-nav-term current-cat"><a rel="nofollow" href="#">Gray</a> <span class="count">(2)</span></li>
-                                <li class="woocommerce-widget-layered-nav-list__item wc-layered-nav-term "><a rel="nofollow" href="#">Green</a> <span class="count">(3)</span></li>
-                                <li class="woocommerce-widget-layered-nav-list__item wc-layered-nav-term "><a rel="nofollow" href="#">Red</a> <span class="count">(4)</span></li>
-                                <li class="woocommerce-widget-layered-nav-list__item wc-layered-nav-term "><a rel="nofollow" href="#">Yellow</a> <span class="count">(1)</span></li>
-                            </ul>
+                        <section id="woocommerce_layered_nav-2" class="widget woocommerce widget_layered_nav woocommerce-widget-layered-nav">
+                            <h3 class="widget-title">Filter by Brand</h3>
+                            @foreach($brands as $brand)
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="brand_id_{{ $brand->id }}" value="{{ $brand->slug }}" name="brand" class="custom-control-input filter-brand" {{ request()->has('brand') && request()->get('brand') == $brand->slug ? "checked='checked'" : '' }} >
+                                <label class="custom-control-label" for="brand_id_{{ $brand->id }}">{{ $brand->name }}</label>
+                            </div>
+                            @endforeach
                         </section>
                         <section id="woocommerce_product_categories-2" class="widget woocommerce widget_product_categories">
-                            <h3 class="widget-title">Product categories</h3>
-                            <ul class="product-categories nav flex-column">
-                                <li class="cat-item cat-item-17 cat-parent nav-item"><a href="#" class="nav-link">Clothing</a>
-                                    <ul class="children nav flex-column">
-                                        <li class="cat-item cat-item-20 nav-item current-cat"><a href="#" class="nav-link">Accessories</a></li>
-                                        <li class="cat-item cat-item-19 nav-item"><a href="#" class="nav-link">Hoodies</a></li>
-                                        <li class="cat-item cat-item-18 nav-item"><a href="#" class="nav-link">Tshirts</a></li>
-                                    </ul>
-                                </li>
-                                <li class="cat-item cat-item-22 nav-item"><a href="#" class="nav-link">Decor</a></li>
-                                <li class="cat-item cat-item-21 nav-item"><a href="#" class="nav-link">Music</a></li>
-                                <li class="cat-item cat-item-15 nav-item"><a href="#" class="nav-link">Uncategorized</a></li>
-                            </ul>
+                            <h3 class="widget-title">Filter by Categories</h3>
+                            @foreach($categories as $category)
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="category_id_{{ $category->id }}" value="{{ $category->slug }}" name="category" class="custom-control-input filter-category" {{ request()->has('category') && request()->get('category') == $category->slug ? "checked='checked'" : '' }}>
+                                <label class="custom-control-label" for="category_id_{{ $category->id }}">{{ $category->name }}</label>
+                            </div>
+                            @endforeach
                         </section>
                     </div>
 
@@ -168,14 +151,56 @@
 @section('scripts')
 
     <script>
+        var current_url = new URL('{!! url()->full() !!}');
+
         $('.gw-sort-products').on('change', function() {
-            let current_url = '{{ request()->url() }}'
             let sort_type = $(this).val()
             if(sort_type) {
-                window.location.href = current_url + `?sort=${sort_type}`
+                current_url.searchParams.set('sort', sort_type)
+                window.location.href = current_url
             } else {
                 window.location.href = current_url
             }
+        })
+
+        // Brand filter
+        $('.filter-brand').on('change', function() {
+            let brand_slug = $(this).val()
+            current_url.searchParams.set('brand', brand_slug)
+            window.location.href = current_url
+        })
+
+        // Category Filter
+        $('.filter-category').on('change', function() {
+            let category_slug = $(this).val()
+            current_url.searchParams.set('category', category_slug)
+            window.location.href = current_url
+        })
+
+        $(document).on('click', '.price-submit', function() {
+            let min_price = $('#min-price').val()
+            let max_price = $('#max-price').val()
+            current_url.searchParams.set('min_price', min_price)
+            current_url.searchParams.set('max_price', max_price)
+            window.location.href = current_url
+        })
+
+        // Filter range slider
+        $( function() {
+            $( "#slider-range" ).slider({
+                range: true,
+                min: {{ floor($minPriceItem) }},
+                max: {{ ceil($maxPriceItem) }},
+                values: [ {{ request()->has('min_price') ? request()->get('min_price') : floor($minPriceItem) }}, {{ request()->has('max_price') ? request()->get('max_price') : ceil($maxPriceItem) }} ],
+                slide: function( event, ui ) {
+                    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] )
+                    $('#min-price').val(ui.values[0])
+                    $('#max-price').val(ui.values[1])
+                }
+            })
+            $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) )
+            $('#min-price').val($( "#slider-range" ).slider( "values", 0 ))
+            $('#max-price').val($( "#slider-range" ).slider( "values", 1 ))
         })
     </script>
 

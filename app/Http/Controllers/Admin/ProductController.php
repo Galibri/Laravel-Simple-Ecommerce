@@ -67,7 +67,7 @@ class ProductController extends Controller
             $path = 'uploads/images/products';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
-            $product->thumbnail = $path . '/' . $image_name;
+            $product->thumbnail = $image_name;
         }
 
         if($product->save()) {
@@ -138,7 +138,7 @@ class ProductController extends Controller
             $path = 'uploads/images/products';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
-            $product->thumbnail = $path . '/' . $image_name;
+            $product->thumbnail = $image_name;
         }
 
         if($product->save()) {

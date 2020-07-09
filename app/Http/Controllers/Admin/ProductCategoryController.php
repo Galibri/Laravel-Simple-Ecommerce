@@ -54,7 +54,7 @@ class ProductCategoryController extends Controller
             $path = 'uploads/images';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
-            $productCategory->thumbnail = $path . '/' . $image_name;
+            $productCategory->thumbnail = $image_name;
         }
 
         if($productCategory->save()) {
@@ -100,10 +100,10 @@ class ProductCategoryController extends Controller
             }
 
             $image = $request->file('thumbnail');
-            $path = 'uploads/images';
+            $path = 'uploads/images/categories';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
-            $productCategory->thumbnail = $path . '/' . $image_name;
+            $productCategory->thumbnail = $image_name;
         }
 
         if($productCategory->save()) {

@@ -3,7 +3,7 @@
 @section('content')
 <!--hero section start-->
 <div id="home">
-    <section class="hero js_full_height base-gradient- " style="background-image: url('{{ asset('assets/frontend/img/hero.jpg') }}')">
+    <section class="hero js_full_height base-gradient- " style="background-image: url('{{ asset('assets/frontend/img/sliced-cheeses.jpg') }}')">
         <div class="hero-content">
             <div class="container">
                 <div class="row">

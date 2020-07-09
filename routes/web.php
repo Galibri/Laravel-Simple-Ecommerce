@@ -17,7 +17,7 @@ Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('is_admin')->group(function () {
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::resource('/product-category', 'ProductCategoryController')->except(['show']);
     Route::resource('/brand', 'BrandController')->except(['show']);
@@ -34,4 +34,13 @@ Route::name('frontend.')->namespace('Frontend')->group(function() {
     Route::post('/add-to-cart', 'CartController@add_to_cart')->name('add-to-cart');
     Route::post('/remove-from-cart', 'CartController@remove_from_cart')->name('remove-from-cart');
     Route::get('/cart', 'CartController@showCartPage')->name('cart');
+    Route::post('/cart-update', 'CartController@update_cart')->name('cart-update');
+    Route::get('/checkout', 'OrderController@checkout')->name('checkout');
+    Route::post('/order', 'OrderController@store')->name('place-order');
+
+    Route::middleware('auth')->group(function() {
+        Route::get('/user/dashboard', 'UserDashboardController@dashbaord')->name('user-dashboard');
+        Route::get('/user/orders', 'UserDashboardController@orders')->name('user-orders');
+        Route::get('/user/order/{order}', 'UserDashboardController@order_details')->name('user-order-details');
+    });
 });

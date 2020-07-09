@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+const countryList = require('country-list');
 
 try {
     window.Popper = require('popper.js').default;
@@ -34,3 +35,9 @@ window.swtoaster = function(type = 'success', message = '') {
         title: message
     })
 }
+/**
+ * Country List
+ * npm i country-list
+ * https://www.npmjs.com/package/country-list
+ */
+window.countryList = countryList

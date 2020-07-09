@@ -12,4 +12,8 @@ class Brand extends Model
     public function products() {
         return $this->hasMany(Product::class);
     }
+
+    public function setLogoAttribute($value) {
+        $this->attributes['logo'] = 'uploads/images/brands/' . $value;
+    }
 }

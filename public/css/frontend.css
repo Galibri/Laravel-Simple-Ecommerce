@@ -11003,3 +11003,18 @@ a.text-dark:focus {
   }
 }
 
+.woocommerce ul.products.columns-3 li.product,
+.woocommerce-page ul.products.columns-3 li.product {
+  min-height: 390px;
+}
+
+.woocommerce ul.products li.product .product-wrap {
+  max-height: 320px;
+  overflow: hidden;
+}
+
+.woocommerce .shop ul.products li.product .product-wrap {
+  max-height: 225px;
+  overflow: hidden;
+}
+

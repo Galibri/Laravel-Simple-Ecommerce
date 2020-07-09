@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "country-list": "^2.2.0",
         "jquery-ui": "^1.12.1",
         "sweetalert2": "^9.15.2"
     }

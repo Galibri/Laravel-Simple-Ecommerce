@@ -25,7 +25,7 @@
                     <div class="col-md-12">
                         <ul class="products columns-3">
                             @foreach($brandProducts as $key => $product)
-                            <li class="product">
+                            <li class="product {{ ($key+1) % 3 == 0 ? 'last' : '' }}">
                                 <div class="product-wrap">
                                     <a href="{{ route('frontend.product', $product->slug) }}" class="">
                                         @if($product->thumbnail)
