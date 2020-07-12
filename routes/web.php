@@ -37,6 +37,7 @@ Route::name('frontend.')->namespace('Frontend')->group(function() {
     Route::post('/cart-update', 'CartController@update_cart')->name('cart-update');
     Route::get('/checkout', 'OrderController@checkout')->name('checkout');
     Route::post('/order', 'OrderController@store')->name('place-order');
+    Route::get('/order-placed/{order}', 'OrderController@order_placed')->name('order-placed');
 
     Route::middleware('auth')->group(function() {
         Route::get('/user/dashboard', 'UserDashboardController@dashbaord')->name('user-dashboard');

@@ -11018,3 +11018,24 @@ a.text-dark:focus {
   overflow: hidden;
 }
 
+.payment_method_selector:checked + label {
+  font-weight: bold;
+  color: #000;
+}
+
+.payment_box_collapse {
+  display: none;
+}
+
+.payment_method_selector:checked + label + div {
+  display: block;
+}
+
+#payment .payment_methods > .wc_payment_method > label {
+  display: block;
+}
+
+.woocommerce-checkout #payment ul.payment_methods {
+  border-bottom: 0 !important;
+}
+

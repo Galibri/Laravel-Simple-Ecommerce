@@ -59,7 +59,11 @@ class CartController extends Controller
             }
             return array();
         }
-        return session('cart');
+        if(session()->has('cart')) {
+            return session('cart');
+        } else {
+            return array();
+        }
     }
 
     public static function cart_action_after_login() {
@@ -213,5 +217,21 @@ class CartController extends Controller
             'markup' => self::get_markup(),
             'subtotal' => self::sub_total()
         ]);
+    }
+
+    public static function make_cart_empty() {
+        if(auth()->check()) {
+            $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
+            if($user_cart) {
+                $user_cart->delete();
+                session()->forget('cart');
+                return true;
+            }
+        }
+        if(session('cart') && count(session('cart')) > 0) {
+            session()->forget('cart');
+            return true;
+        }
+        return false;
     }
 }

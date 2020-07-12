@@ -31,6 +31,10 @@ class Product extends Model
         return $this->selling_price == 0 ? $this->price : $this->selling_price;
     }
 
+    public function getFinalPriceAttribute() {
+        return $this->selling_price == 0 ? $this->price : $this->selling_price;
+    }
+
     public function setThumbnailAttribute($value) {
         $this->attributes['thumbnail'] = 'uploads/images/products/' . $value;
     }
