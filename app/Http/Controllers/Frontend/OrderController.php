@@ -35,9 +35,8 @@ class OrderController extends Controller
                 'email' =>  'unique:users,email'
             ]);
             $user = new User;
-            $user->phone = bcrypt($request->input('password'));
+            $user->email = $request->input('email');
         }
-        $user->email = $request->input('email');
         $user->password = bcrypt($request->input('password'));
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
