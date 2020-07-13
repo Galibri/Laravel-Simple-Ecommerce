@@ -1,15 +1,19 @@
 import Swal from 'sweetalert2'
+import flatpickr from "flatpickr"
 
-require('./bootstrap');
+require('./bootstrap')
 // window.Vue = require('vue');
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 // const app = new Vue({
 //     el: '#app',
 // });
 
+// Flatpicker for date time pciker
+window.flatpickr = flatpickr
+
 
 // Sweetalert2
-window.Swal = Swal;
+window.Swal = Swal
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -22,7 +26,7 @@ const Toast = Swal.mixin({
     }
 })
 
-window.swtoaster = function(type = 'success', message = '') {
+window.swtoaster = function (type = 'success', message = '') {
     Toast.fire({
         icon: type,
         title: message

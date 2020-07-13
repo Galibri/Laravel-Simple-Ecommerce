@@ -8,7 +8,7 @@ try {
     require('jquery-ui/ui/widgets/slider')
 
     require('bootstrap');
-} catch (e) {}
+} catch (e) { }
 
 window.axios = require('axios');
 
@@ -29,7 +29,7 @@ const Toast = Swal.mixin({
     }
 })
 
-window.swtoaster = function(type = 'success', message = '') {
+window.swtoaster = function (type = 'success', message = '') {
     Toast.fire({
         icon: type,
         title: message

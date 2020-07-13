@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Auth::routes();
 
@@ -22,11 +22,14 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('is_admin
     Route::resource('/product-category', 'ProductCategoryController')->except(['show']);
     Route::resource('/brand', 'BrandController')->except(['show']);
     Route::resource('/product', 'ProductController');
+    Route::resource('/coupon', 'CouponController');
+    Route::resource('/shipping', 'ShippingController');
+    Route::resource('/tax', 'TaxController');
 });
 
 Route::get('/', 'HomeController@index')->name('frontend.home');
 
-Route::name('frontend.')->namespace('Frontend')->group(function() {
+Route::name('frontend.')->namespace('Frontend')->group(function () {
     Route::get('/shop', 'ShopController@index')->name('shop');
     Route::get('/product-category/{slug}', 'ProductCategoryController@show')->name('product_category');
     Route::get('/brand/{slug}', 'BrandController@show')->name('brand');
@@ -39,7 +42,7 @@ Route::name('frontend.')->namespace('Frontend')->group(function() {
     Route::post('/order', 'OrderController@store')->name('place-order');
     Route::get('/order-placed/{order}', 'OrderController@order_placed')->name('order-placed');
 
-    Route::middleware('auth')->group(function() {
+    Route::middleware('auth')->group(function () {
         Route::get('/user/dashboard', 'UserDashboardController@dashbaord')->name('user-dashboard');
         Route::get('/user/orders', 'UserDashboardController@orders')->name('user-orders');
         Route::get('/user/order/{order}', 'UserDashboardController@order_details')->name('user-order-details');

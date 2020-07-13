@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "country-list": "^2.2.0",
+        "flatpickr": "^4.6.3",
         "jquery-ui": "^1.12.1",
         "sweetalert2": "^9.15.2"
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use File;
-use App\Models\Admin\Brand;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Brand;
+use File;
+use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
@@ -42,20 +42,20 @@ class BrandController extends Controller
             'name' => 'required'
         ]);
 
-        $brand = new Brand;
-        $brand->name = $request->get('name');
+        $brand              = new Brand();
+        $brand->name        = $request->get('name');
         $brand->description = $request->get('description');
-        $brand->status = $request->get('status');
+        $brand->status      = $request->get('status');
 
-        if($request->has('logo')) {
-            $image = $request->file('logo');
-            $path = 'uploads/images/brands';
+        if ($request->has('logo')) {
+            $image      = $request->file('logo');
+            $path       = 'uploads/images/brands';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
             $brand->logo = $image_name;
         }
 
-        if($brand->save()) {
+        if ($brand->save()) {
             return redirect()->route('admin.brand.edit', $brand->id)->with('success', 'Brand created successfully.');
         } else {
             return redirect()->back()->with('error', 'Please try again later.');
@@ -86,23 +86,23 @@ class BrandController extends Controller
             'name' => 'required'
         ]);
 
-        $brand->name = $request->get('name');
+        $brand->name        = $request->get('name');
         $brand->description = $request->get('description');
-        $brand->status = $request->get('status');
+        $brand->status      = $request->get('status');
 
-        if($request->has('logo')) {
-            if($brand->logo) {
+        if ($request->has('logo')) {
+            if ($brand->logo) {
                 File::delete($brand->logo);
             }
 
-            $image = $request->file('logo');
-            $path = 'uploads/images/brands';
+            $image      = $request->file('logo');
+            $path       = 'uploads/images/brands';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
             $brand->logo = $image_name;
         }
 
-        if($brand->save()) {
+        if ($brand->save()) {
             return redirect()->back()->with('success', 'Brand updated successfully.');
         } else {
             return redirect()->back()->with('error', 'Please try again later.');
@@ -117,11 +117,11 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        if($brand->logo) {
+        if ($brand->logo) {
             File::delete($brand->logo);
         }
 
-        if($brand->delete()) {
+        if ($brand->delete()) {
             return response()->json(['result' => 'success']);
         } else {
             return response()->json(['result' => $errors->all()]);

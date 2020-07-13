@@ -287,6 +287,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @guest
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -300,6 +301,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @endguest
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <h3>Additional information</h3>
