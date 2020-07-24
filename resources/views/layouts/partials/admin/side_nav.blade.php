@@ -93,8 +93,8 @@
 
                 <li class="nav-header">Manage Orders</li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.product.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.product.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.order.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.order.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-shopping-bag"></i>
                         <p> Orders</p>
                     </a>
@@ -103,7 +103,7 @@
                     <a href="{{ route('admin.product.index') }}"
                         class="nav-link {{ request()->routeIs('admin.product.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-chart-pie"></i>
-                        <p> Orders</p>
+                        <p> Statistics</p>
                     </a>
                 </li>
 

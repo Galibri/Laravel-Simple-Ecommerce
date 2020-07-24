@@ -10,11 +10,13 @@ class OrderDetail extends Model
 {
     protected $guarded = [];
 
-    public function order() {
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
 
-    public function product() {
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 }

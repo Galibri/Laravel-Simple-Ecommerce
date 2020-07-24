@@ -17,6 +17,7 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->unsignedInteger('user_id');
             $table->text('cart_items');
+            $table->string('coupon_code')->nullable();
             $table->timestamps();
         });
     }

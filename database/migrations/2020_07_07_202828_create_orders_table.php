@@ -31,9 +31,15 @@ class CreateOrdersTable extends Migration
             $table->string('s_country')->nullable();
             $table->text('additional')->nullable();
             $table->string('payment_method')->nullable();
+            $table->float('sub_total')->default(0);
+            $table->float('coupon_amount')->default(0);
+            $table->float('shipping_charge')->default(0);
+            $table->float('tax_amount')->default(0);
+            $table->unsignedInteger('shipping_id')->nullable();
             $table->float('order_total')->default(0);
             $table->string('payment_status')->default('pending');
             $table->string('order_status')->default('pending');
+            $table->boolean('is_seen')->default(false);
             $table->timestamps();
         });
     }

@@ -11039,3 +11039,7 @@ a.text-dark:focus {
   border-bottom: 0 !important;
 }
 
+.swal2-container {
+  z-index: 1400 !important;
+}
+

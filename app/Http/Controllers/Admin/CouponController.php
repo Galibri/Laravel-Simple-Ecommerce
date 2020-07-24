@@ -19,7 +19,7 @@ class CouponController extends Controller
         return view('admin.coupon.create');
     }
 
-    public function store(Request $request, Coupon $coupon)
+    public function store(Request $request)
     {
         $request->validate([
             'name'       => 'required',

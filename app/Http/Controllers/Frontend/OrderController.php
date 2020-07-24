@@ -19,7 +19,6 @@ class OrderController extends Controller
 
         $request->validate([
             'first_name'     => 'required',
-            'email'          => 'required',
             'phone'          => 'required',
             'address_line_1' => 'required',
             'city'           => 'required',
@@ -33,12 +32,12 @@ class OrderController extends Controller
         } else {
             $request->validate([
                 'password' => 'required|min:8',
-                'email'    => 'unique:users,email'
+                'email'    => 'required|unique:users,email'
             ]);
-            $user        = new User();
-            $user->email = $request->input('email');
+            $user           = new User();
+            $user->email    = $request->input('email');
+            $user->password = bcrypt($request->input('password'));
         }
-        $user->password   = bcrypt($request->input('password'));
         $user->first_name = $request->input('first_name');
         $user->last_name  = $request->input('last_name');
         $user->company    = $request->input('company');

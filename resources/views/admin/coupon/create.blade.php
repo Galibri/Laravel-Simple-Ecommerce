@@ -6,7 +6,7 @@
 <form action="{{ route('admin.coupon.store')}}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="row mt-3">
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <h3>Add Coupon</h3>
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 offset-lg-1">
+        <div class="col-md-3 offset-md-1">
             <div class="card">
                 <div class="card-header">
                     <label for="status">Status</label>

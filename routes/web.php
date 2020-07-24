@@ -22,6 +22,7 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->middleware('is_admin
     Route::resource('/product-category', 'ProductCategoryController')->except(['show']);
     Route::resource('/brand', 'BrandController')->except(['show']);
     Route::resource('/product', 'ProductController');
+    Route::resource('/order', 'OrderController')->except(['show', 'create', 'store']);
     Route::resource('/coupon', 'CouponController');
     Route::resource('/shipping', 'ShippingController');
     Route::resource('/tax', 'TaxController');
@@ -41,10 +42,14 @@ Route::name('frontend.')->namespace('Frontend')->group(function () {
     Route::get('/checkout', 'OrderController@checkout')->name('checkout');
     Route::post('/order', 'OrderController@store')->name('place-order');
     Route::get('/order-placed/{order}', 'OrderController@order_placed')->name('order-placed');
+    Route::post('/coupon-submit', 'CouponController@process_coupon')->name('coupon-submit');
 
     Route::middleware('auth')->group(function () {
         Route::get('/user/dashboard', 'UserDashboardController@dashbaord')->name('user-dashboard');
         Route::get('/user/orders', 'UserDashboardController@orders')->name('user-orders');
         Route::get('/user/order/{order}', 'UserDashboardController@order_details')->name('user-order-details');
+        Route::get('/user/account', 'UserDashboardController@account')->name('user-account');
+        Route::put('/user/account', 'UserDashboardController@account_update')->name('user-account-update');
+        Route::put('/user/password', 'UserDashboardController@update_password')->name('user-password-update');
     });
 });
