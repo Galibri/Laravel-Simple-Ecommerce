@@ -15,6 +15,7 @@
         </div>
     </div>
 </section>
+
 <!--page title end-->
 <main class="site-main">
     <!--shop category start-->
@@ -141,14 +142,22 @@
                                     <tr class="cart-subtotal">
                                         <th>Subtotal</th>
                                         <td data-title="Subtotal"><span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">$</span>{{ CartController::sub_total() }}</span>
+                                                    class="woocommerce-Price-currencySymbol">$
+                                                </span>{{ CartController::sub_total() }}</span>
                                         </td>
                                     </tr>
+                                    @if(CartController::coupon_discount_amount() > 0)
+                                    <tr>
+                                        <th>Discount</th>
+                                        <td>$ {{ sprintf("%0.2f", CartController::coupon_discount_amount()) }}</td>
+                                    </tr>
+                                    @endif
                                     <tr class="order-total">
                                         <th>Total</th>
                                         <td data-title="Total"><strong><span
                                                     class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">$</span>{{ CartController::cart_final_price() }}</span></strong>
+                                                        class="woocommerce-Price-currencySymbol">$
+                                                    </span>{{ CartController::cart_final_price() }}</span></strong>
                                         </td>
                                     </tr>
                                 </tbody>

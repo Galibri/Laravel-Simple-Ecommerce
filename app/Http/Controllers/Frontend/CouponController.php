@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Frontend\CartController;
 use App\Models\Admin\Coupon;
 use App\Models\Frontend\Cart;
 use Illuminate\Http\Request;
@@ -34,6 +33,37 @@ class CouponController extends Controller
 
     }
 
+    public function get_valid_coupon()
+    {
+        if (auth()->check()) {
+            $cart = Cart::where('user_id', auth()->user()->id)->first();
+            if ($cart) {
+                $this->couponCode = $cart->coupon_code;
+
+                if (!$this->is_coupon_valid()) {
+                    $this->couponCode  = null;
+                    $cart->coupon_code = null;
+                    $cart->save();
+                }
+            } else {
+                $this->couponCode = null;
+            }
+        }
+        if (session()->has('coupon')) {
+            $this->couponCode = session('coupon');
+            if (!$this->is_coupon_valid()) {
+                $this->couponCode = null;
+                session()->forget('coupon');
+            }
+        }
+        return $this->couponCode;
+    }
+
+    public static function get_coupon()
+    {
+        return (new self())->get_valid_coupon();
+    }
+
     public function add_coupon()
     {
         if (auth()->check()) {
@@ -45,10 +75,13 @@ class CouponController extends Controller
             return false;
         }
 
-        if (session()->put('coupon', $this->couponCode)) {
+        session()->put('coupon', $this->couponCode);
+
+        if (session()->has('coupon')) {
             return true;
         }
         return false;
+
     }
 
     public static function remove_coupon()

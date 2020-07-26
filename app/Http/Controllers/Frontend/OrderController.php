@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CouponController;
+use App\Models\Admin\Coupon;
 use App\Models\Admin\Product;
 use App\Models\Frontend\Order;
 use App\Models\Frontend\OrderDetail;
@@ -63,10 +65,18 @@ class OrderController extends Controller
         $order->s_country        = $request->input('s_country');
         $order->additional       = $request->input('additional');
         $order->payment_method   = $request->input('payment_method');
+        $order->sub_total        = CartController::sub_total();
         $order->order_total      = CartController::cart_final_price();
+        $order->coupon_amount    = CartController::coupon_discount_amount();
         $order->payment_status   = 'pending';
         $order->order_status     = 'pending';
         $order->save();
+
+        if (CartController::coupon_discount_amount() > 0) {
+            $db_coupon       = Coupon::where('code', CouponController::get_coupon())->first();
+            $db_coupon->used = $db_coupon->used + 1;
+            $db_coupon->save();
+        }
 
         $get_cart            = CartController::get_cart();
         $order_details_array = array();

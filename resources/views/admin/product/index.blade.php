@@ -1,61 +1,67 @@
 @extends('layouts.admin')
-@section('title', 'Category')
+@section('title', 'Products')
 
 
 @section('content')
-    <div class="card mt-3">
-        <div class="card-header">
-            <h3>Brands</h3>
-        </div>
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Slug</th>
-                        <th>Thumbnail</th>
-                        <th>Status</th>
-                        <th style="width: 150px;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($products as $product)
-                    <tr>
-                        <td>{{ $product->title }}</td>
-                        <td>{{ $product->slug }}</td>
-                        @if($product->thumbnail)
-                            <td><img src="{{ asset($product->thumbnail) }}" height="50" alt=""></td>
-                        @else
-                            <td>No Logo</td>
-                        @endif
-                        <td>{{ $product->productStatus() }}</td>
-                        <td>
-                            <a href="{{ route('admin.product.show', $product->id) }}" data-info="" class="btn btn-success btn-sm product-modal" data-toggle="modal" data-target="#productModal"><i class="far fa-eye"></i></a>
-                            <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-warning btn-sm"><i class="far fa-edit"></i></a>
-                            <a href="{{ route('admin.product.destroy', $product->id) }}" class="btn btn-danger btn-sm delete"><i class="far fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $products->links() }}
-        </div>
+<div class="card mt-3">
+    <div class="card-header">
+        <h3 class="float-left">Products</h3>
+        <a href="{{ route('admin.product.create') }}" class="btn btn-primary float-right">Add new</a>
     </div>
-  
-  <!-- Modal -->
-<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalTitle" aria-hidden="true">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Thumbnail</th>
+                    <th>Status</th>
+                    <th style="width: 150px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($products as $product)
+                <tr>
+                    <td>{{ $product->title }}</td>
+                    <td>{{ $product->slug }}</td>
+                    @if($product->thumbnail)
+                    <td><img src="{{ asset($product->thumbnail) }}" height="50" alt=""></td>
+                    @else
+                    <td>No Logo</td>
+                    @endif
+                    <td>{{ $product->productStatus() }}</td>
+                    <td>
+                        <a href="{{ route('admin.product.show', $product->id) }}" data-info=""
+                            class="btn btn-success btn-sm product-modal" data-toggle="modal"
+                            data-target="#productModal"><i class="far fa-eye"></i></a>
+                        <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-warning btn-sm"><i
+                                class="far fa-edit"></i></a>
+                        <a href="{{ route('admin.product.destroy', $product->id) }}"
+                            class="btn btn-danger btn-sm delete"><i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        {{ $products->links() }}
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Product details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <table class="table">
                     <tbody class="modalAppend">
-                        
+
                     </tbody>
                 </table>
             </div>

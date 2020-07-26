@@ -16,6 +16,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('assets/backend/plugins/fontawesome-free/css/all.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/backend/plugins/summernote/summernote-bs4.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/backend/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/backend/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -55,6 +59,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('assets/backend/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/backend/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    {{-- Select 2 --}}
+    <script src="{{ asset('assets/backend/plugins/select2/js/select2.min.js') }}"></script>
+    <script>
+        (function($) {
+            $(document).ready(function() {
+                // Select 2
+                $('.select2').select2({
+                    theme: 'bootstrap4'
+                });
+            });
+        })(jQuery);
+    </script>
 
     {{-- Extra plugins --}}
     <script src="{{ asset('assets/backend/plugins/summernote/summernote-bs4.min.js') }}"></script>

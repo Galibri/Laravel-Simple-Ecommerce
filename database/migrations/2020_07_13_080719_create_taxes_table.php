@@ -17,6 +17,7 @@ class CreateTaxesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
+            $table->string('country')->nullable();
             $table->float('amount')->default(0);
             $table->boolean('status')->default(true);
             $table->timestamps();

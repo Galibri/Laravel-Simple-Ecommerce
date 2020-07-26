@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Shipping;
 use Illuminate\Http\Request;
 
 class ShippingController extends Controller
@@ -14,7 +15,8 @@ class ShippingController extends Controller
      */
     public function index()
     {
-        //
+        $shippings = Shipping::orderBy('created_at', 'desc')->paginate(10);
+        return view('admin.shipping.index', compact('shippings'));
     }
 
     /**
@@ -24,7 +26,7 @@ class ShippingController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.shipping.create');
     }
 
     /**
@@ -35,7 +37,22 @@ class ShippingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'      => 'required',
+            'countries' => 'required',
+            'amount'    => 'required'
+        ]);
+        $shipping              = new Shipping();
+        $shipping->name        = $request->input('name');
+        $shipping->description = $request->input('description');
+        $shipping->countries   = json_encode($request->input('countries'));
+        $shipping->amount      = $request->input('amount');
+        $shipping->status      = $request->input('status');
+        if ($shipping->save()) {
+            return redirect()->route('admin.shipping.edit', $shipping->id)->with('success', 'Shipping added');
+        }
+
+        return redirect()->route('admin.shipping.index')->with('error', 'Please try again.');
     }
 
     /**
@@ -55,9 +72,9 @@ class ShippingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Shipping $shipping)
     {
-        //
+        return view('admin.shipping.edit', compact('shipping'));
     }
 
     /**
@@ -67,9 +84,24 @@ class ShippingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Shipping $shipping)
     {
-        //
+        $request->validate([
+            'name'      => 'required',
+            'countries' => 'required',
+            'amount'    => 'required'
+        ]);
+
+        $shipping->name        = $request->input('name');
+        $shipping->description = $request->input('description');
+        $shipping->countries   = json_encode($request->input('countries'));
+        $shipping->amount      = $request->input('amount');
+        $shipping->status      = $request->input('status');
+        if ($shipping->save()) {
+            return redirect()->route('admin.shipping.edit', $shipping->id)->with('success', 'Shipping updated');
+        }
+
+        return redirect()->route('admin.shipping.index')->with('error', 'Please try again.');
     }
 
     /**
@@ -78,8 +110,11 @@ class ShippingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Shipping $shipping)
     {
-        //
+        if ($shipping->delete()) {
+            return redirect()->back()->with('success', 'Shipping deleted');
+        }
+        return redirect()->back()->with('error', 'Please try again.');
     }
 }

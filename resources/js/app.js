@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2'
 import flatpickr from "flatpickr"
+const countryList = require('country-list');
 
 require('./bootstrap')
 // window.Vue = require('vue');
@@ -32,3 +33,10 @@ window.swtoaster = function (type = 'success', message = '') {
         title: message
     })
 }
+
+/**
+ * Country List
+ * npm i country-list
+ * https://www.npmjs.com/package/country-list
+ */
+window.countryList = countryList

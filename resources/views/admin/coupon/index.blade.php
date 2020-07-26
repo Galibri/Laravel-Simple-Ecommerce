@@ -5,7 +5,8 @@
 @section('content')
 <div class="card mt-3">
     <div class="card-header">
-        <h3>Coupons</h3>
+        <h3 class="float-left">Coupons</h3>
+        <a href="{{ route('admin.coupon.create') }}" class="btn btn-primary float-right">Add new</a>
     </div>
     <div class="card-body">
         <table class="table table-hover">

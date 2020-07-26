@@ -141,7 +141,7 @@
                             <a href="{{ route('admin.shipping.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.shipping.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>All Coupons</p>
+                                <p>All Shippings</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -163,7 +163,7 @@
                             <a href="{{ route('admin.tax.index') }}"
                                 class="nav-link {{ request()->routeIs('admin.tax.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>All Coupons</p>
+                                <p>All Taxes</p>
                             </a>
                         </li>
                         <li class="nav-item">

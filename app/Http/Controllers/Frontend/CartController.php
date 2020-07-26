@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\CouponController;
+use App\Models\Admin\Coupon;
 use App\Models\Admin\Product;
 use App\Models\Frontend\Cart;
 use App\Services\CartService;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    protected $couponAmount = 0;
     /**
      * Add product to cart
      * return [json "total_in_cart, cart_items, get_markup, sub_total"]
@@ -70,21 +72,30 @@ class CartController extends Controller
 
     public static function cart_action_after_login()
     {
+        if (session()->has('coupon')) {
+            $coupon = session('coupon');
+        } else {
+            $coupon = null;
+        }
+
         if (auth()->check()) {
             if (session('cart')) {
                 $user_cart = Cart::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first();
                 if ($user_cart) {
                     // Check existing data
-                    $items                 = json_decode($user_cart->cart_items, true);
-                    $new_items             = session('cart') + $items;
-                    $user_cart->cart_items = json_encode($new_items);
+                    $items                  = json_decode($user_cart->cart_items, true);
+                    $new_items              = session('cart') + $items;
+                    $user_cart->cart_items  = json_encode($new_items);
+                    $user_cart->coupon_code = $coupon;
                 } else {
-                    $user_cart             = new Cart();
-                    $user_cart->user_id    = auth()->user()->id;
-                    $user_cart->cart_items = json_encode(session('cart'));
+                    $user_cart              = new Cart();
+                    $user_cart->user_id     = auth()->user()->id;
+                    $user_cart->cart_items  = json_encode(session('cart'));
+                    $user_cart->coupon_code = $coupon;
                 }
                 if ($user_cart->save()) {
                     session()->forget('cart');
+                    session()->forget('coupon');
                 }
             }
         }
@@ -143,12 +154,28 @@ class CartController extends Controller
     public static function cart_final_price()
     {
         $subTotal = self::sub_total();
+
+        // Coupon discount
+        $couponAmount = self::coupon_discount_amount();
+
         // we will add discount, tax and shipping charge here
         $tax            = 0;
-        $discount       = 0;
         $shippingCharge = 0;
-        $total          = $subTotal + $tax + $shippingCharge - $discount;
+        $total          = $subTotal + $tax + $shippingCharge - $couponAmount;
         return $total;
+    }
+
+    /**
+     * Apply coupon discount
+     */
+    public static function coupon_discount_amount()
+    {
+        $couponCode = CouponController::get_coupon();
+        $coupon     = Coupon::where('code', $couponCode)->orderBy('created_at', 'desc')->first();
+        if ($coupon) {
+            return $coupon->amount;
+        }
+        return 0;
     }
 
     /**
@@ -247,6 +274,7 @@ class CartController extends Controller
         }
         if (session('cart') && count(session('cart')) > 0) {
             session()->forget('cart');
+            session()->forget('coupon');
             return true;
         }
         return false;

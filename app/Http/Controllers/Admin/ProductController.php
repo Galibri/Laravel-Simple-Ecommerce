@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-Use  File;
-use App\Models\Admin\Brand;
-use Illuminate\Http\Request;
-use App\Models\Admin\Product;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Brand;
+use App\Models\Admin\Product;
 use App\Models\Admin\ProductCategory;
+use File;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -18,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::orderBy('created_at', 'desc')->paginate(8);
         return view('admin.product.index', compact('products'));
     }
 
@@ -30,7 +30,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = ProductCategory::orderBy('created_at', 'desc')->get();
-        $brands = Brand::orderBy('created_at', 'desc')->get();
+        $brands     = Brand::orderBy('created_at', 'desc')->get();
         return view('admin.product.create', compact('categories', 'brands'));
     }
 
@@ -47,30 +47,30 @@ class ProductController extends Controller
             'price' => 'required'
         ]);
 
-        $product = new Product;
-        $product->title = $request->get('title');
+        $product                      = new Product();
+        $product->title               = $request->get('title');
         $product->product_category_id = $request->get('product_category_id');
-        $product->brand_id = $request->get('brand_id');
-        $product->description = $request->get('description');
-        $product->short_description = $request->get('short_description');
-        
-        $product->price = (float) $request->get('price');
+        $product->brand_id            = $request->get('brand_id');
+        $product->description         = $request->get('description');
+        $product->short_description   = $request->get('short_description');
+
+        $product->price         = (float) $request->get('price');
         $product->selling_price = (float) $request->get('selling_price');
 
-        $product->sku = $request->get('sku');
-        $product->qty = $request->get('qty');
+        $product->sku     = $request->get('sku');
+        $product->qty     = $request->get('qty');
         $product->virtual = $request->get('virtual');
-        $product->status = $request->get('status');
+        $product->status  = $request->get('status');
 
-        if($request->has('thumbnail')) {
-            $image = $request->file('thumbnail');
-            $path = 'uploads/images/products';
+        if ($request->has('thumbnail')) {
+            $image      = $request->file('thumbnail');
+            $path       = 'uploads/images/products';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
             $product->thumbnail = $image_name;
         }
 
-        if($product->save()) {
+        if ($product->save()) {
             return redirect()->route('admin.product.edit', $product->id)->with('success', 'Product created successfully.');
         } else {
             return redirect()->back()->with('error', 'Please try again later.');
@@ -98,7 +98,7 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = ProductCategory::orderBy('created_at', 'desc')->get();
-        $brands = Brand::orderBy('created_at', 'desc')->get();
+        $brands     = Brand::orderBy('created_at', 'desc')->get();
         return view('admin.product.edit', compact('categories', 'brands', 'product'));
     }
 
@@ -116,32 +116,32 @@ class ProductController extends Controller
             'price' => 'required'
         ]);
 
-        $product->title = $request->get('title');
+        $product->title               = $request->get('title');
         $product->product_category_id = $request->get('product_category_id');
-        $product->brand_id = $request->get('brand_id');
-        $product->description = $request->get('description');
-        $product->short_description = $request->get('short_description');
-        
-        $product->price = (float) $request->get('price');
+        $product->brand_id            = $request->get('brand_id');
+        $product->description         = $request->get('description');
+        $product->short_description   = $request->get('short_description');
+
+        $product->price         = (float) $request->get('price');
         $product->selling_price = (float) $request->get('selling_price');
 
-        $product->sku = $request->get('sku');
-        $product->qty = $request->get('qty');
+        $product->sku     = $request->get('sku');
+        $product->qty     = $request->get('qty');
         $product->virtual = $request->get('virtual');
-        $product->status = $request->get('status');
+        $product->status  = $request->get('status');
 
-        if($request->has('thumbnail')) {
-            if($product->thumbnail) {
+        if ($request->has('thumbnail')) {
+            if ($product->thumbnail) {
                 File::delete($product->thumbnail);
             }
-            $image = $request->file('thumbnail');
-            $path = 'uploads/images/products';
+            $image      = $request->file('thumbnail');
+            $path       = 'uploads/images/products';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
             $product->thumbnail = $image_name;
         }
 
-        if($product->save()) {
+        if ($product->save()) {
             return redirect()->route('admin.product.edit', $product->id)->with('success', 'Product updated successfully.');
         } else {
             return redirect()->back()->with('error', 'Please try again later.');
@@ -156,11 +156,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if($product->thumbnail) {
+        if ($product->thumbnail) {
             File::delete($product->thumbnail);
         }
 
-        if($product->delete()) {
+        if ($product->delete()) {
             return response()->json(['result' => 'success']);
         } else {
             return response()->json(['result' => $errors->all()]);

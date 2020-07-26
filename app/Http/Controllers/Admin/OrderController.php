@@ -27,6 +27,11 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        if ($order->is_seen == false) {
+            $order->is_seen = true;
+            $order->save();
+        }
+
         return view('admin.order.edit', compact('order'));
     }
 

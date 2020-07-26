@@ -374,32 +374,24 @@
                                                                         class="price">{{ CartController::sub_total() }}</span></strong>
                                                             </td>
                                                         </tr>
-                                                        <tr class="cart_item">
-                                                            <td class="product-name">Tax</td>
-                                                            <td class="product-total">
-                                                                $ <span class="tax-price">0.00</span>
-                                                            </td>
+                                                        @if(CartController::coupon_discount_amount() > 0)
+                                                        <tr>
+                                                            <td>Discount</td>
+                                                            <td>$ {{ CartController::coupon_discount_amount() }}</td>
                                                         </tr>
-                                                        <tr class="cart_item">
-                                                            <td class="product-name">Discount</td>
-                                                            <td class="product-total">
-                                                                $ <span class="discount-price">0.00</span>
-                                                            </td>
-                                                        </tr>
-                                                        <tr class="cart_item">
-                                                            <td class="product-name">Shipping Charge</td>
-                                                            <td class="product-total">
-                                                                $ <span class="shipping-price">0.00</span>
-                                                            </td>
-                                                        </tr>
+                                                        @endif
                                                     </tbody>
                                                     <tfoot>
                                                         <tr class="order-total">
                                                             <th>Total</th>
-                                                            <td><strong><span
-                                                                        class="woocommerce-Price-amount amount"><span
-                                                                            class="woocommerce-Price-currencySymbol">$
-                                                                        </span>{{ CartController::cart_final_price() }}</span></strong>
+                                                            <td>
+                                                                <strong>
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <span class="woocommerce-Price-currencySymbol">$
+                                                                        </span>
+                                                                        {{ CartController::cart_final_price() }}
+                                                                    </span>
+                                                                </strong>
                                                             </td>
                                                         </tr>
                                                     </tfoot>

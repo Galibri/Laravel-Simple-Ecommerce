@@ -51,7 +51,7 @@
                     <img class="footer-logo" src="{{ asset('assets/frontend/img/logo.png') }}"
                         srcset="{{ asset('assets/frontend/img/logo@2x.png 2x') }}" alt="">
                 </div>
-                <div class="col-md-4  mb-md-0 mb-4">
+                <div class="col-md-4  mb-md-0 mb-4 text-center">
                     <div class="social-links">
                         <a href="#"><i class="fa fa-facebook"></i></a>
                         <a href="#"><i class="fa fa-twitter"></i></a>
@@ -59,9 +59,9 @@
                         <a href="#"><i class="fa fa-youtube"></i></a>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <p class="mb-0">Built with Simple Shop & WooCommerce</p>
-                    <p class="mb-0">© YourCompany 2019</p>
+                <div class="col-md-4 text-right">
+                    <p class="mb-0">Proudly powered by Laravel</p>
+                    <p class="mb-0">&copy; MyShop 2020</p>
                 </div>
             </div>
         </div>

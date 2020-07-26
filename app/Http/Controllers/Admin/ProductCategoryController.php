@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use File;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\ProductCategory;
+use File;
+use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
 {
@@ -43,21 +43,21 @@ class ProductCategoryController extends Controller
             'name' => 'required'
         ]);
 
-        $productCategory = new ProductCategory;
-        $productCategory->name = $request->get('name');
-        $productCategory->parent_id = $request->get('parent_id');
+        $productCategory              = new ProductCategory();
+        $productCategory->name        = $request->get('name');
+        $productCategory->parent_id   = $request->get('parent_id');
         $productCategory->description = $request->get('description');
-        $productCategory->status = $request->get('status');
+        $productCategory->status      = $request->get('status');
 
-        if($request->has('thumbnail')) {
-            $image = $request->file('thumbnail');
-            $path = 'uploads/images';
+        if ($request->has('thumbnail')) {
+            $image      = $request->file('thumbnail');
+            $path       = 'uploads/images';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
             $productCategory->thumbnail = $image_name;
         }
 
-        if($productCategory->save()) {
+        if ($productCategory->save()) {
             return redirect()->route('admin.product-category.edit', $productCategory->id)->with('success', 'Product category created successfully.');
         } else {
             return redirect()->back()->with('error', 'Please try again later.');
@@ -89,24 +89,24 @@ class ProductCategoryController extends Controller
             'name' => 'required'
         ]);
 
-        $productCategory->name = $request->get('name');
-        $productCategory->parent_id = $request->get('parent_id');
+        $productCategory->name        = $request->get('name');
+        $productCategory->parent_id   = $request->get('parent_id');
         $productCategory->description = $request->get('description');
-        $productCategory->status = $request->get('status');
+        $productCategory->status      = $request->get('status');
 
-        if($request->has('thumbnail')) {
-            if($productCategory->thumbnail) {
+        if ($request->has('thumbnail')) {
+            if ($productCategory->thumbnail) {
                 File::delete($productCategory->thumbnail);
             }
 
-            $image = $request->file('thumbnail');
-            $path = 'uploads/images/categories';
+            $image      = $request->file('thumbnail');
+            $path       = 'uploads/images/categories';
             $image_name = time() . '_' . rand(100, 999) . '_' . $image->getClientOriginalName();
             $image->move(public_path($path), $image_name);
             $productCategory->thumbnail = $image_name;
         }
 
-        if($productCategory->save()) {
+        if ($productCategory->save()) {
             return redirect()->route('admin.product-category.edit', $productCategory->id)->with('success', 'Product category updated successfully.');
         } else {
             return redirect()->back()->with('error', 'Please try again later.');
@@ -121,11 +121,11 @@ class ProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
-        if($productCategory->thumbnail) {
+        if ($productCategory->thumbnail) {
             File::delete($productCategory->thumbnail);
         }
 
-        if($productCategory->delete()) {
+        if ($productCategory->delete()) {
             return response()->json(['result' => 'success']);
         } else {
             return response()->json(['result' => $errors->all()]);
